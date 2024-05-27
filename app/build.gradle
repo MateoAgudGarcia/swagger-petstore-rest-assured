@@ -16,13 +16,14 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'io.cucumber', name: 'cucumber-java', version: '7.18.0'
-    implementation group: 'org.json', name: 'json', version: '20240303'
-    implementation group: 'commons-codec', name: 'commons-codec', version: '1.17.0'
-    implementation group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '5.0.0'
+    implementation('io.cucumber:cucumber-java:7.18.0')
+    implementation('org.json:json:20240303')
+    implementation('commons-codec:commons-codec:1.17.0')
+    implementation('com.github.javafaker:javafaker:1.0.2')
+    implementation('com.fasterxml.uuid:java-uuid-generator:5.0.0')
 
-    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.25.3'
-    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.4.0'
+    testImplementation('org.assertj:assertj-core:3.25.3')
+    testImplementation('io.rest-assured:rest-assured:5.4.0')
 
 }
 
@@ -39,17 +40,13 @@ java {
     }
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = 'org.example.App'
-}
 
 tasks.register('cucumber') {
     doLast {
         javaexec {
             mainClass = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'org.example', 'src/test/java/Features']
+            args = ['--plugin', 'pretty', '--glue', 'test.swagger.pet', 'src/test/java/Features']
         }
     }
 
